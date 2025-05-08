@@ -1,19 +1,16 @@
 import { useState } from "react";
 import "../styles/LoginForm.css";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-const EMAIL_KEY = "login_email";
-const AUTH_KEY = "auth_status";
+import { getEmail, isAuthenticated, login, logout } from "../api/authApi";
+import { useNavigate } from "react-router";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState(localStorage.getItem(EMAIL_KEY) || "");
+  const [email, setEmail] = useState(getEmail());
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    localStorage.getItem(AUTH_KEY) === "true"
-  );
-
+    const navigate = useNavigate();
   const validateEmail = (email) => {
     /** for email
      * include @
@@ -49,36 +46,17 @@ const LoginForm = () => {
     const emailOK = validateEmail(email);
     const passOK = validatePassword(password);
     if (emailOK && passOK) {
-      localStorage.setItem(EMAIL_KEY, email);
-      localStorage.setItem(AUTH_KEY, "true");
-      setIsAuthenticated(true);
+      if (login(email)) {
+        navigate('/', {replace: true})
+      }
       alert("Login successful");
     }
   };
 
-  const handleLogout = () => {
-    setEmail("");
-    setPassword("");
-    setEmailError("");
-    setPasswordError("");
-    setIsAuthenticated(false);
-    localStorage.removeItem(EMAIL_KEY);
-    localStorage.setItem(AUTH_KEY, "false");
-  };
+  const handleLogout = () => logout();
 
   const isSubmitDisabled =
     !email || !password || !!emailError || !!passwordError;
-
-  if (isAuthenticated) {
-    return (
-      <div className="login-box">
-        <p>
-          You are logged in as <strong>{email}</strong>.
-        </p>
-        <button onClick={handleLogout}>Log out</button>
-      </div>
-    );
-  }
 
   return (
     <form onSubmit={handleSubmit} className="login-box">
@@ -110,7 +88,7 @@ const LoginForm = () => {
           className="toggle-button"
           onClick={() => setShowPassword((prev) => !prev)}
         >
-          {showPassword ? <EyeInvisibleOutlined/> : <EyeOutlined/>}
+          {!showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
         </button>
       </div>
       {passwordError && <div className="error-text">{passwordError}</div>}
