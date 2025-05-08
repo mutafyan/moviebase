@@ -10,13 +10,8 @@ const LoginForm = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const validateEmail = (email) => {
-    /** for email
-     * include @
-     * include .
-     * include domain after @
-     */
     const res = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     setEmailError(res ? "" : "Enter a valid email address.");
     return res;
@@ -41,15 +36,16 @@ const LoginForm = () => {
     return res;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const emailOK = validateEmail(email);
     const passOK = validatePassword(password);
     if (emailOK && passOK) {
-      if (login(email)) {
-        navigate('/', {replace: true})
+      if (await login(email, password)) {
+        navigate("/", { replace: true });
+      } else {
+        alert("Login failed");
       }
-      alert("Login successful");
     }
   };
 
