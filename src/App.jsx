@@ -1,18 +1,29 @@
 import { useEffect } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { auth } from "./firebase";
-import { setUser, clearUser } from "./store/slices/authSlice";
+import { setUser, clearUser, finishLoading } from "./store/slices/authSlice";
 import ProtectedRoute from "./components/ProtectedRoute";
-import HomePage from "./pages/main/HomePage";
+import HomeScreen from "./pages/main/HomeScreen";
 import "./App.css";
 import LoginScreen from "./pages/auth/LoginScreen";
+import RegisterScreen from "./pages/auth/RegisterScreen";
+import PublicRoute from "./components/PublicRoute";
 
 const router = createBrowserRouter([
   {
-    path: "/auth",
-    element: <LoginScreen />,
+    element: <PublicRoute/>,
+    children: [
+      {
+        path: "/register",
+        element: <RegisterScreen />,
+      },
+      {
+        path: "/login",
+        element: <LoginScreen />,
+      },
+    ]
   },
   {
     path: "/",
@@ -20,10 +31,12 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: <HomeScreen />,
       },
+      //...
     ],
   },
+  { path: '*', element: <Navigate to={'/'} replace/>}
 ]);
 
 function App() {
@@ -36,9 +49,10 @@ function App() {
       } else {
         dispatch(clearUser());
       }
+      dispatch(finishLoading())
     });
 
-    return () => unsubscribe(); // remove auth state listeners
+    return unsubscribe; // remove auth state listeners
   }, [dispatch]);
 
   return <RouterProvider router={router} />;

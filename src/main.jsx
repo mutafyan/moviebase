@@ -1,14 +1,18 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.jsx";
 import { Provider } from "react-redux";
-import store from "./store/index.js";
+import { App as AntdApp } from "antd"; // a wrapper to use antd toast messages
+import store from "./store";
+import "./index.css";
+import "antd/dist/reset.css";
+import App from "./App";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
-      <App />
+      <AntdApp>
+        <App />
+      </AntdApp>
     </Provider>
   </StrictMode>
 );

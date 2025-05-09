@@ -1,100 +1,79 @@
 import { useState } from "react";
-import "../styles/LoginForm.css";
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-import { getEmail, isAuthenticated, login, logout } from "../api/authApi";
-import { useNavigate } from "react-router";
+import { Form, Input, Button, App } from "antd";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import { login, getEmail } from "../api/authApi";
+import { useNavigate, NavLink } from "react-router";
+import { useDispatch } from "react-redux";
+import { setUser } from "../store/slices/authSlice";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState(getEmail());
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [form] = Form.useForm();
+  const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
-  const validateEmail = (email) => {
-    const res = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    setEmailError(res ? "" : "Enter a valid email address.");
-    return res;
-  };
+  const dispatch = useDispatch();
 
-  const validatePassword = (password) => {
-    /** for password
-     * at least 8 characters
-     * one lowercase letter
-     * one uppercase letter
-     * one number
-     * one special character (@$!%*?&)
-     */
-    const res = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(
-      password
-    );
-    setPasswordError(
-      res
-        ? ""
-        : "Password must be 8+ chars with upper, lower, number & special char."
-    );
-    return res;
-  };
+  const { message } = App.useApp();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const emailOK = validateEmail(email);
-    const passOK = validatePassword(password);
-    if (emailOK && passOK) {
-      if (await login(email, password)) {
-        navigate("/", { replace: true });
-      } else {
-        alert("Login failed");
-      }
+  const onFinish = async ({ email, password }) => {
+    setSubmitting(true);
+    try {
+      const cred = await login(email, password);
+      dispatch(
+        setUser({
+          uid: cred.user.uid,
+          email: cred.user.email,
+        })
+      );
+      message.success("Login successful", 2);
+      navigate("/", { replace: true });
+    } catch (err) {
+      message.error(err.message || "Authentication failed", 3);
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  const handleLogout = () => logout();
-
-  const isSubmitDisabled =
-    !email || !password || !!emailError || !!passwordError;
-
   return (
-    <form onSubmit={handleSubmit} className="login-box">
-      <input
-        type="email"
-        value={email}
-        placeholder="Enter your email"
-        onChange={(e) => {
-          setEmail(e.target.value);
-          validateEmail(e.target.value);
-        }}
-        className={emailError ? "error-input" : ""}
-      />
-      {emailError && <div className="error-text">{emailError}</div>}
+    <Form
+      form={form}
+      layout="vertical"
+      name="login"
+      initialValues={{ email: getEmail() }}
+      onFinish={onFinish}
+      autoComplete="off"
+    >
+      <Form.Item
+        label="Email"
+        name="email"
+        rules={[
+          { required: true, message: "Please enter your e-mail" },
+          { type: "email", message: "Invalid e-mail format" },
+        ]}
+      >
+        <Input placeholder="Enter your e-mail" autoFocus />
+      </Form.Item>
 
-      <div className="password-wrapper">
-        <input
-          type={showPassword ? "text" : "password"}
-          value={password}
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[{ required: true, message: "Please enter your password" }]}
+      >
+        <Input.Password
           placeholder="Enter your password"
-          onChange={(e) => {
-            setPassword(e.target.value);
-            validatePassword(e.target.value);
-          }}
-          className={passwordError ? "error-input" : ""}
+          iconRender={(v) => (v ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
         />
-        <button
-          type="button"
-          className="toggle-button"
-          onClick={() => setShowPassword((prev) => !prev)}
-        >
-          {!showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
-        </button>
-      </div>
-      {passwordError && <div className="error-text">{passwordError}</div>}
+      </Form.Item>
 
-      <div className="buttons-container">
-        <button type="submit" disabled={isSubmitDisabled}>
+      <Form.Item>
+        <Button type="primary" htmlType="submit" loading={submitting} block>
           Submit
-        </button>
+        </Button>
+      </Form.Item>
+
+      <div style={{ textAlign: "center", marginTop: 16 }}>
+        Don't have an account? <NavLink to="/register">Register</NavLink>
       </div>
-    </form>
+    </Form>
   );
 };
 

@@ -17,8 +17,11 @@ const authSlice = createSlice({
       state.user = null;
       state.loading = false;
     },
+    finishLoading(state) {
+      state.loading = false;
+    },
   },
 });
 
-export const { setUser, clearUser } = authSlice.actions;
+export const { setUser, clearUser, finishLoading } = authSlice.actions;
 export default authSlice.reducer;
