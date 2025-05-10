@@ -4,6 +4,16 @@
   padding: 2rem;
   text-align: center;
 }
+html, body, #root { height: 100%; }
+
+.ant-layout {
+  min-height: 100%;
+}
+
+.site-content {
+  padding-top: 64px;
+}
+
 
 .logo {
   height: 6em;

@@ -1,39 +1,57 @@
 import { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router";
-import { getMovieByTitle } from "../../api/movieApi";
-import { logout } from "../../api/authApi";
-import {App} from 'antd';
+import { Layout, Spin, App } from "antd";
+import NavBar from "../../components/NavBar";
+import Banner from "../../components/Banner";
+import PopularMovies from "../../components/PopularMovies";
+import { getTrendingToday, getPopularByYear } from "../../api/movieApi";
+
+const { Content } = Layout;
+
 const HomeScreen = () => {
-    const navigate = useNavigate();
-    const [movie, setMovie] = useState(null);
-    const { message } = App.useApp();
+  const [hero, setHero] = useState(null);
+  const [popular, setPopular] = useState(null);
+  const { message } = App.useApp();
 
-    useEffect(()=>{
-        const getData = async () => {
-            const movie = await getMovieByTitle('Nobody');
-            setMovie(movie);
-        }
-        getData();
-    }, [])
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const [trend, pop] = await Promise.all([
+          getTrendingToday(),
+          getPopularByYear(2025), // run 2 tasks as iterable
+        ]);
+        setHero(trend.results?.[0] ?? null);
+        setPopular(pop.results ?? []);
+      } catch (err) {
+        message.error(`TMDB error: ${err.message}`);
+        setPopular([]);
+      }
+    };
+    load();
+  }, []);
 
-    const onLogout = async () => {
-        const loggedOut = await logout();
-        if(loggedOut) {
-            message.success('Logged out', 2)
-            navigate('/login', {replace: true});
-        } else {
-            console.log("Couldn't logout")
-        }
-    }
-    return <div>
-        Home Page
-        <NavLink onClick={onLogout}>Logout</NavLink>
-        {movie && <div>
-            <p>{movie.Title}</p>
-            <img src={movie.Poster}/>
-            </div>
-            }
-    </div>
-}
+  return (
+    <Layout>
+      <NavBar />
+      <Content className="site-content">
+        {!hero && popular === null ? (
+          <Spin fullscreen />
+        ) : (
+          <>
+            <Banner movie={hero} />
+            <section style={{ padding: "40px 60px" }}>
+              <h2>What is MovieBase?</h2>
+              <p>
+                MovieBase is a lightweight IMDb-style catalogue powered by&nbsp;
+                TMDB. Browse, search and save your favourite titles without the
+                clutter.
+              </p>
+            </section>
+            <PopularMovies movies={popular} loading={popular === null} />
+          </>
+        )}
+      </Content>
+    </Layout>
+  );
+};
 
 export default HomeScreen;
