@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
-import { Layout, Spin, App } from "antd";
-import NavBar from "../../components/NavBar";
+import { Spin, App } from "antd";
 import Banner from "../../components/Banner";
 import PopularMovies from "../../components/PopularMovies";
 import { getTrendingToday, getPopularByYear } from "../../api/movieApi";
-
-const { Content } = Layout;
 
 const HomeScreen = () => {
   const [hero, setHero] = useState(null);
@@ -30,9 +27,7 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <Layout>
-      <NavBar />
-      <Content className="site-content">
+    <>
         {!hero && popular === null ? (
           <Spin fullscreen />
         ) : (
@@ -44,13 +39,12 @@ const HomeScreen = () => {
                 TMDB. Browse, search and save your favourite titles without the
                 clutter.
               </p>
-            </section> 
+            </section>
             <Banner movie={hero} />
             <PopularMovies movies={popular} loading={popular === null} />
           </>
         )}
-      </Content>
-    </Layout>
+    </>
   );
 };
 
