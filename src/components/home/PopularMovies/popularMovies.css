@@ -1,0 +1,46 @@
+.popular-carousel {
+  position: relative;
+  overflow: visible;
+}
+
+.popular-carousel .slick-slide > div {
+  padding: 0 12px;
+}
+.popular-carousel .ant-card-cover img {
+  height: 340px !important;
+}
+
+.popular-carousel .slick-dots-bottom {
+  bottom: -42px;
+}
+.popular-carousel .slick-dots li::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 4px;
+  background: #d9d9d9;
+  border-radius: 2px;
+}
+.popular-carousel .slick-dots li.slick-active::after {
+  background: #1677ff;
+}
+
+.nav-arrow {
+  position: absolute;
+  bottom: -50px;
+  font-size: 18px;
+  color: #595959;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.nav-arrow-prev {
+  right: calc(50% + 270px);
+}
+.nav-arrow-next {
+  left: calc(50% + 270px);
+}
+
+.popular-carousel .slick-arrow:not(.nav-arrow) {
+  display: none !important;
+}

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Form, Input, Button, App } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import { login, getEmail } from "../api/authApi";
+import { login, getEmail } from "../../api/authApi";
 import { useNavigate, NavLink } from "react-router";
 import { useDispatch } from "react-redux";
-import { setUser } from "../store/slices/authSlice";
+import { setUser } from "../../store/slices/authSlice";
 
 const LoginForm = () => {
   const [form] = Form.useForm();

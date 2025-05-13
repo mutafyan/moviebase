@@ -1,49 +1,56 @@
 import { useEffect, useState } from "react";
 import { Spin, App } from "antd";
-import Banner from "../../components/Banner";
-import PopularMovies from "../../components/PopularMovies";
-import { getTrendingToday, getPopularByYear } from "../../api/movieApi";
+import PopularMovies from "../../components/home/PopularMovies";
+import PopularActors from "../../components/home/PopularActors";
+import AboutSection from "../../components/home/AboutSection";
+import {
+  getTrendingToday,
+  getPopularByYear,
+  getPopularActors,
+} from "../../api/movieApi";
+import BannerSection from "../../components/Home/BannerSection";
 
 const HomeScreen = () => {
   const [hero, setHero] = useState(null);
-  const [popular, setPopular] = useState(null);
+  const [popularMovies, setPopularMovies] = useState(null);
+  const [popularActors, setPopularActors] = useState(null);
   const { message } = App.useApp();
 
   useEffect(() => {
     const load = async () => {
       try {
-        const [trend, pop] = await Promise.all([
+        const [trend, popMovies, popActors] = await Promise.all([
           getTrendingToday(),
-          getPopularByYear(2025), // run 2 tasks as iterable
+          getPopularByYear(2025),
+          getPopularActors(),
         ]);
+
         setHero(trend.results?.[0] ?? null);
-        setPopular(pop.results ?? []);
+        setPopularMovies(popMovies.results ?? []);
+        setPopularActors(popActors.results ?? []);
       } catch (err) {
         message.error(`TMDB error: ${err.message}`);
-        setPopular([]);
+        setPopularMovies([]);
+        setPopularActors([]);
       }
     };
     load();
-  }, []);
+  }, [message]);
 
-  return (
+  const loading =
+    hero === null || popularMovies === null || popularActors === null;
+
+  return loading ? (
+    <Spin fullscreen />
+  ) : (
     <>
-        {!hero && popular === null ? (
-          <Spin fullscreen />
-        ) : (
-          <>
-            <section style={{ padding: "40px 30px" }}>
-              <h2>What is MovieBase?</h2>
-              <p>
-                MovieBase is a lightweight IMDb-style catalogue powered by&nbsp;
-                TMDB. Browse, search and save your favourite titles without the
-                clutter.
-              </p>
-            </section>
-            <Banner movie={hero} />
-            <PopularMovies movies={popular} loading={popular === null} />
-          </>
-        )}
+      <BannerSection movie={hero} />
+
+      <AboutSection />
+
+      <PopularMovies movies={popularMovies} loading={popularMovies === null} />
+
+      <PopularActors actors={popularActors} loading={popularActors === null} />
     </>
   );
 };

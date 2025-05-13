@@ -18,6 +18,15 @@ body,
 .site-content {
   padding-top: 64px;
 }
+.banner-trailer {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  .banner-trailer {
+    display: block !important;
+  }
+}
 
 .logo {
   height: 6em;

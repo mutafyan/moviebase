@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate, Outlet } from "react-router";
-import ProtectedRoute from "./components/ProtectedRoute";
-import PublicRoute from "./components/PublicRoute";
+import ProtectedRoute from "./components/routes/ProtectedRoute";
+import PublicRoute from "./components/routes/PublicRoute";
 import Layout from "./components/Layout";
 import HomeScreen from "./pages/main/HomeScreen";
 import LoginScreen from "./pages/auth/LoginScreen";

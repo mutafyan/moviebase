@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/slices/authSlice";
 import { register } from "../../api/authApi";
-import AuthCard from "../../components/AuthCard";
+import AuthCard from "../../components/auth/AuthCard";
 
 const RegisterScreen = () => {
   const [loading, setLoading] = useState(false);
