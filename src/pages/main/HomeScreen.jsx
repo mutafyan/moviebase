@@ -37,15 +37,15 @@ const HomeScreen = () => {
           <Spin fullscreen />
         ) : (
           <>
-            <Banner movie={hero} />
-            <section style={{ padding: "40px 60px" }}>
+            <section style={{ padding: "40px 30px" }}>
               <h2>What is MovieBase?</h2>
               <p>
                 MovieBase is a lightweight IMDb-style catalogue powered by&nbsp;
                 TMDB. Browse, search and save your favourite titles without the
                 clutter.
               </p>
-            </section>
+            </section> 
+            <Banner movie={hero} />
             <PopularMovies movies={popular} loading={popular === null} />
           </>
         )}

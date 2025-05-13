@@ -10,10 +10,12 @@ import "./App.css";
 import LoginScreen from "./pages/auth/LoginScreen";
 import RegisterScreen from "./pages/auth/RegisterScreen";
 import PublicRoute from "./components/PublicRoute";
+import MoviesScreen from "./pages/main/MoviesScreen";
+import MovieDetailScreen from "./pages/main/MovieDetailScreen";
 
 const router = createBrowserRouter([
   {
-    element: <PublicRoute/>,
+    element: <PublicRoute />,
     children: [
       {
         path: "/register",
@@ -23,7 +25,7 @@ const router = createBrowserRouter([
         path: "/login",
         element: <LoginScreen />,
       },
-    ]
+    ],
   },
   {
     path: "/",
@@ -33,10 +35,23 @@ const router = createBrowserRouter([
         index: true,
         element: <HomeScreen />,
       },
+      {
+        path: "/movies",
+        children: [
+          {
+            index: true,
+            element: <MoviesScreen />,
+          },
+          {
+            path: ":id",
+            element: <MovieDetailScreen />,
+          },
+        ],
+      },
       //...
     ],
   },
-  { path: '*', element: <Navigate to={'/'} replace/>}
+  { path: "*", element: <Navigate to={"/"} replace /> },
 ]);
 
 function App() {
@@ -49,7 +64,7 @@ function App() {
       } else {
         dispatch(clearUser());
       }
-      dispatch(finishLoading())
+      dispatch(finishLoading());
     });
 
     return unsubscribe; // remove auth state listeners

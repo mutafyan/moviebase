@@ -1,13 +1,14 @@
-import { Row, Col, Card, Rate, Skeleton, Empty } from 'antd';
-import { poster } from '../api/movieApi';
+import { Row, Col, Skeleton, Empty, Carousel } from "antd";
+import Movie from "./Movie";
+import { useNavigate } from "react-router";
 
 const PopularMovies = ({ movies, loading }) => {
   if (loading) {
     return (
-      <Row gutter={[24, 32]} style={{ padding: '0 60px' }}>
+      <Row gutter={[24, 32]} style={{ padding: "0 60px" }}>
         {Array.from({ length: 8 }).map((_, i) => (
           <Col xs={12} sm={8} md={6} lg={4} key={i}>
-            <Skeleton.Image active style={{ width: '100%', height: 300 }} />
+            <Skeleton.Image active style={{ width: "100%", height: 300 }} />
             <Skeleton active paragraph={{ rows: 1 }} />
           </Col>
         ))}
@@ -16,32 +17,37 @@ const PopularMovies = ({ movies, loading }) => {
   }
 
   if (!movies?.length) {
-    return <Empty description="No popular movies found." style={{ padding: 80 }} />;
+    return (
+      <Empty description="No popular movies found." style={{ padding: 80 }} />
+    );
   }
 
   return (
-    <section style={{ padding: '40px 60px' }}>
-      <h2>Most popular movies of 2025</h2>
-      <Row gutter={[24, 32]}>
+    <section style={{ padding: "40px 60px" }}>
+      <h2 style={{ marginBottom: 24 }}>Most popular movies of 2025</h2>
+
+      <Carousel
+        arrows={true}
+        dots={false}
+        infinite={true}
+        swipeToSlide={true}
+        slidesToShow={5} // desktop default
+        slidesToScroll={1}
+        responsive={[
+          { breakpoint: 1536, settings: { slidesToShow: 5 } },
+          { breakpoint: 1280, settings: { slidesToShow: 4 } },
+          { breakpoint: 992, settings: { slidesToShow: 3 } },
+          { breakpoint: 768, settings: { slidesToShow: 2 } },
+          { breakpoint: 480, settings: { slidesToShow: 1 } },
+        ]}
+        style={{minHeight: 'max-content'}}
+      >
         {movies.map((m) => (
-          <Col xs={12} sm={8} md={6} lg={4} key={m.id}>
-            <Card
-              hoverable
-              cover={
-                <img
-                  src={poster(m.poster_path)}
-                  alt={m.title}
-                  loading="lazy"
-                  style={{ height: 300, objectFit: 'cover' }}
-                />
-              }
-            >
-              <Card.Meta title={m.title} />
-              <Rate disabled allowHalf defaultValue={m.vote_average / 2} />
-            </Card>
-          </Col>
+          <div key={m.id} style={{ padding: "0 20px"}}>
+            <Movie movie={m}/>
+          </div>
         ))}
-      </Row>
+      </Carousel>
     </section>
   );
 };

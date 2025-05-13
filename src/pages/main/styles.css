@@ -1,0 +1,16 @@
+.hero-banner {
+  width: 100vw;
+  margin: 0 calc(-50vw + 50%);
+  height: 320px;
+  background-size: cover;
+  background-position: center;
+}
+
+.detail-card {
+  max-width: 1200px;
+  margin: -200px auto 40px;
+  padding: 40px 32px 56px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}

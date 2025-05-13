@@ -25,5 +25,11 @@ export const getPopularByYear = (year = new Date().getFullYear()) =>
     `${TMDB}/discover/movie?primary_release_year=${year}&sort_by=popularity.desc`
   );
 
-export const getPopular = () =>
-  fetchJson(`${TMDB}/movie/popular?language=en-US`);
+export const searchMovies = (query, page = 1) =>
+  fetchJson(`${TMDB}/search/movie?query=${encodeURIComponent(query)}&page=${page}`);
+
+export const getMovieDetails = (id) =>
+  fetchJson(`${TMDB}/movie/${id}?append_to_response=videos,credits,images`);
+
+export const getPopular = (page = 1) =>
+  fetchJson(`${TMDB}/movie/popular?page=${page}`)
