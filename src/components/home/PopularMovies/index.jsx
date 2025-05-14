@@ -1,6 +1,6 @@
 import { Carousel, Skeleton, Empty } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import Movie from "../../Movie";
+import Movie from "../../movies/MovieItem";
 import "./popularMovies.css";
 
 const GAP = 24;
@@ -39,6 +39,8 @@ const PopularMovies = ({ movies, loading }) => {
         autoplay
         autoplaySpeed={4500}
         draggable
+        pauseOnHover
+        dotPosition="bottom"
         slidesToShow={4}
         slidesToScroll={1}
         dots
@@ -54,7 +56,7 @@ const PopularMovies = ({ movies, loading }) => {
       >
         {movies.map((m) => (
           <div key={m.id} style={{ padding: `0 ${GAP / 2}px` }}>
-            <Movie movie={m} />
+            <Movie movie={m} touchable={false}/>
           </div>
         ))}
       </Carousel>

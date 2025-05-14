@@ -2,7 +2,7 @@ import { useSearchParams, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { List, Card, Input, Spin, Empty, App } from "antd";
 import { searchMovies, getPopular, poster } from "../../api/movieApi";
-import Movie from "../../components/Movie";
+import Movie from "../../components/movies/MovieItem";
 
 const MoviesScreen = () => {
   const [params] = useSearchParams();
@@ -43,7 +43,7 @@ const MoviesScreen = () => {
         dataSource={movies}
         renderItem={(m) => (
           <List.Item key={m.id}>
-            <Movie movie={m} />
+            <Movie movie={m} touchable={true}/>
           </List.Item>
         )}
         pagination={{

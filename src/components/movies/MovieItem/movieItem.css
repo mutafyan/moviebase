@@ -1,0 +1,94 @@
+.card {
+  position: relative;
+  overflow: hidden;
+}
+
+.card .ant-card-body {
+  background: transparent;
+}
+
+.card.touchable {
+  cursor: pointer;
+}
+
+.cover {
+  height: 300px;
+  object-fit: cover;
+}
+
+.gradient {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 60%;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.35) 45%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.info {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  width: 88%;
+  text-align: center;
+  transform: translate(-50%, 45%);
+  transition: transform 0.35s ease, bottom 0.35s ease;
+  z-index: 1;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.info.hover {
+  bottom: 35%;
+  transform: translate(-50%, 50%);
+}
+
+.title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.ratingRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.overview {
+  margin-top: 14px;
+  font-size: 14px;
+  line-height: 1.35;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.35s ease, max-height 0.35s ease;
+}
+
+.overview.hover {
+  opacity: 1;
+  max-height: 140px;
+}
+
+.button {
+  margin: 9px 0;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+
+.info.hover .button {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}

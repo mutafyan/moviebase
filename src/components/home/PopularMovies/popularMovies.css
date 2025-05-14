@@ -11,7 +11,7 @@
 }
 
 .popular-carousel .slick-dots-bottom {
-  bottom: -42px;
+  bottom: -38px;
 }
 .popular-carousel .slick-dots li::before {
   content: "";
