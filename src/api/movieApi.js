@@ -38,3 +38,9 @@ export const getPopular = (page = 1) =>
 
 export const getPopularActors = (page = 1) =>
   fetchJson(`${TMDB}/person/popular?page=${page}&language=en-US`);
+
+export const getActorDetails = (id) =>
+  fetchJson(`${TMDB}/person/${id}?language=en-US`);
+
+export const getActorMovies = (id) =>
+  fetchJson(`${TMDB}/person/${id}/movie_credits?language=en-US`);

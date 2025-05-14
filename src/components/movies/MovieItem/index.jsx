@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Card, Rate, Badge, Button } from "antd";
 import { poster } from "../../../api/movieApi";
 import { useLocation, useNavigate } from "react-router";
@@ -18,6 +18,23 @@ const MovieItem = ({ movie, touchable = true }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [hover, setHover] = useState(false);
+  const [narrow, setNarrow] = useState(false);
+  const cardRef = useRef(null);
+  useEffect(() => {
+    const observer = new ResizeObserver(([entry]) => {
+      setNarrow(entry.contentRect.width < 200);
+    });
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, []);
 
   const handleNavigate = () => {
     const path = location.pathname.includes("movies")
@@ -30,18 +47,21 @@ const MovieItem = ({ movie, touchable = true }) => {
     <Badge.Ribbon text={year} placement="end" color="#1677ff">
       <Card
         hoverable={touchable}
-        className={`card ${touchable ? "touchable" : ""}`}
+        className={`card ${touchable ? "touchable" : ""} ${
+          narrow ? "narrow" : ""
+        }`}
         styles={{ body: { padding: 0, background: "transparent" } }}
         cover={<img src={poster(poster_path)} alt={title} className="cover" />}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         onClick={touchable ? handleNavigate : undefined}
+        ref={cardRef}
       >
         <div className="gradient" />
 
         <div className={`info ${hover ? "hover" : ""}`}>
           <div className="title">{title}</div>
-          <div className="ratingRow">
+          <div className={`ratingRow ${hover ? "hover" : ""}`}>
             <Rate disabled allowHalf defaultValue={vote_average / 2} />
             <strong>({(vote_average / 2).toFixed(1)}/5)</strong>
           </div>

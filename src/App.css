@@ -7,8 +7,8 @@
 html,
 body,
 #root {
-  height: 100%;
-  overflow-x: hidden;
+  height: auto;
+  overflow: auto;
 }
 
 .ant-layout {

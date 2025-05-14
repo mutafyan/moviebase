@@ -36,9 +36,9 @@
   position: absolute;
   left: 50%;
   bottom: 10px;
-  width: 88%;
+  width: 90%;
   text-align: center;
-  transform: translate(-50%, 45%);
+  transform: translate(-50%, 30%);
   transition: transform 0.35s ease, bottom 0.35s ease;
   z-index: 1;
   color: #fff;
@@ -62,6 +62,14 @@
   align-items: center;
   gap: 6px;
   font-size: 14px;
+}
+
+.card.narrow .ratingRow {
+  opacity: 0;
+}
+
+.card.narrow .info.hover .ratingRow {
+  opacity: 1;
 }
 
 .overview {

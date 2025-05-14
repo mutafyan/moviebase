@@ -1,27 +1,26 @@
 import { Layout as AntLayout, Spin } from "antd";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import { useLocation } from "react-router";
 import NavBar from "./NavBar";
+import { useEffect } from "react";
 
 const { Content, Footer } = AntLayout;
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
+
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0 });
+    window.scroll({top: 0, behavior: 'smooth'});
   }, [pathname]);
+
   return null;
 };
-
 const Layout = ({ children }) => {
   const { loading } = useSelector((state) => state.auth);
   return (
     <AntLayout style={{ minHeight: "100vh", flexDirection: "column" }}>
-      <ScrollToTop />
-
       <NavBar />
-
+      <ScrollToTop />
       <Content
         style={{
           padding: "24px 24px 0",

@@ -1,7 +1,7 @@
-import { Carousel, Skeleton, Empty } from "antd";
+import { Carousel, Skeleton, Empty, Divider, Typography } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import Movie from "../../movies/MovieItem";
 import "./popularMovies.css";
+import MovieItem from "../../movies/MovieItem";
 
 const GAP = 24;
 
@@ -32,8 +32,13 @@ const PopularMovies = ({ movies, loading }) => {
 
   return (
     <section style={{ padding: "40px 60px 96px" }}>
-      <h2 style={{ marginBottom: 24 }}>Most popular movies of&nbsp;2025</h2>
-
+      <Typography.Title
+        level={2}
+        style={{ marginBottom: 24, textAlign: "left", paddingLeft: "20px" }}
+      >
+        Popular movies of 2025
+      </Typography.Title>
+      <Divider variant="solid" />
       <Carousel
         className="popular-carousel"
         autoplay
@@ -56,7 +61,7 @@ const PopularMovies = ({ movies, loading }) => {
       >
         {movies.map((m) => (
           <div key={m.id} style={{ padding: `0 ${GAP / 2}px` }}>
-            <Movie movie={m} touchable={false}/>
+            <MovieItem movie={m} touchable={false} />
           </div>
         ))}
       </Carousel>
