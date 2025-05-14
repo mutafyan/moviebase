@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
-import { Typography, Button, message } from "antd";
+import { Typography, Button, message, Grid } from "antd";
 import { PlayCircleFilled, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { banner, getMovieDetails } from "../../api/movieApi";
 
 const { Title, Paragraph, Text } = Typography;
+const { useBreakpoint } = Grid;
 
 const BannerSection = ({ movie }) => {
   const navigate = useNavigate();
+  const screens = useBreakpoint();
+  const isMobile = !screens.md;
+
   const [trailerKey, setTrailerKey] = useState(null);
 
   useEffect(() => {
@@ -32,25 +36,13 @@ const BannerSection = ({ movie }) => {
 
   if (!movie) return null;
 
-  const openTrailer = () => {
-    if (trailerKey) {
-      window.open(`https://www.youtube.com/watch?v=${trailerKey}`, "_blank");
-    } else {
-      message.info("Trailer unavailable");
-    }
-  };
-
-  const addToWatchlist = () => {
-    message.success("Added to watchlist (stub)");
-  };
-
   const backdrop = movie.backdrop_path && banner(movie.backdrop_path);
 
   return (
     <section
       style={{
         position: "relative",
-        minHeight: 420,
+        minHeight: isMobile ? 320 : 420,
         display: "flex",
         alignItems: "center",
         background: backdrop
@@ -58,32 +50,32 @@ const BannerSection = ({ movie }) => {
           : "#222",
         borderRadius: 8,
         overflow: "hidden",
-        margin: "0 40px 40px",
+        margin: isMobile ? "0 16px 32px" : "0 40px 40px",
       }}
     >
       <div
         style={{
-          maxWidth: 640,
-          padding: "48px 60px",
+          maxWidth: isMobile ? "100%" : 640,
+          padding: isMobile ? "24px" : "48px 60px",
           color: "#fff",
         }}
       >
-        <Title level={1} style={{ color: "#fff" }}>
+        <Title level={isMobile ? 2 : 1} style={{ color: "#fff" }}>
           {movie.title}
         </Title>
 
         {movie.tagline && (
           <Text
             italic
-            style={{ color: "#fff", display: "block", marginBottom: 24 }}
+            style={{ color: "#fff", display: "block", marginBottom: 16 }}
           >
             “{movie.tagline}”
           </Text>
         )}
 
         <Paragraph
-          style={{ color: "#fff", marginBottom: 32 }}
-          ellipsis={{ rows: 3 }}
+          style={{ color: "#fff", marginBottom: 24 }}
+          ellipsis={{ rows: isMobile ? 4 : 3 }}
         >
           {movie.overview || "No overview available."}
         </Paragraph>
@@ -97,24 +89,37 @@ const BannerSection = ({ movie }) => {
             More about the movie
           </Button>
 
-          <Button icon={<PlusOutlined />} size="large" onClick={addToWatchlist}>
+          <Button
+            icon={<PlusOutlined />}
+            size="large"
+            onClick={() => message.success("Added to watchlist (stub)")}
+          >
             Add to watchlist
           </Button>
         </div>
       </div>
 
-      <PlayCircleFilled
-        onClick={openTrailer}
-        style={{
-          position: "absolute",
-          top: "50%",
-          right: "12%",
-          transform: "translateY(-50%)",
-          fontSize: 96,
-          color: "rgba(255,255,255,.85)",
-          cursor: "pointer",
-        }}
-      />
+      {!isMobile && (
+        <PlayCircleFilled
+          onClick={() =>
+            trailerKey
+              ? window.open(
+                  `https://www.youtube.com/watch?v=${trailerKey}`,
+                  "_blank"
+                )
+              : message.info("Trailer unavailable")
+          }
+          style={{
+            position: "absolute",
+            top: "50%",
+            right: "12%",
+            transform: "translateY(-50%)",
+            fontSize: 96,
+            color: "rgba(255,255,255,.85)",
+            cursor: "pointer",
+          }}
+        />
+      )}
     </section>
   );
 };

@@ -1,23 +1,37 @@
-import { Carousel, Skeleton, Empty, Divider, Typography } from "antd";
+import { Carousel, Skeleton, Empty, Divider, Typography, Grid } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import "./popularMovies.css";
+import "./popularCarousels.css";
 import MovieItem from "../../movies/MovieItem";
 
 const GAP = 24;
 
-const PrevArrow = ({ currentSlide, slideCount, ...rest }) => (
-  <span {...rest} className="nav-arrow nav-arrow-prev">
-    <LeftOutlined />
-  </span>
-);
+const PrevArrow = ({ className, style, onClick }) => {
+  return (
+    <span
+      className={`nav-arrow nav-arrow-prev ${className}`}
+      style={style}
+      onClick={onClick}
+    >
+      <LeftOutlined />
+    </span>
+  );
+};
 
-const NextArrow = ({ currentSlide, slideCount, ...rest }) => (
-  <span {...rest} className="nav-arrow nav-arrow-next">
-    <RightOutlined />
-  </span>
-);
+const NextArrow = ({ className, style, onClick }) => {
+  return (
+    <span
+      className={`nav-arrow nav-arrow-next ${className}`}
+      style={style}
+      onClick={onClick}
+    >
+      <RightOutlined />
+    </span>
+  );
+};
 
 const PopularMovies = ({ movies, loading }) => {
+  const screens = Grid.useBreakpoint();
+
   if (loading)
     return (
       <section style={{ padding: "0 60px" }}>
@@ -31,7 +45,9 @@ const PopularMovies = ({ movies, loading }) => {
     );
 
   return (
-    <section style={{ padding: "40px 60px 96px" }}>
+    <section
+      style={{ padding: screens.md ? "40px 60px 96px" : "32px 16px 72px" }}
+    >
       <Typography.Title
         level={2}
         style={{ marginBottom: 24, textAlign: "left", paddingLeft: "20px" }}

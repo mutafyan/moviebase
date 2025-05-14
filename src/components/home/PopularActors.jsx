@@ -1,7 +1,7 @@
-import { Carousel, Skeleton, Empty, Divider, Typography } from "antd";
+import { Carousel, Skeleton, Empty, Divider, Typography, Grid } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import ActorItem from "../movies/ActorItem";
-import "./PopularMovies/popularMovies.css";
+import "./PopularMovies/popularCarousels.css";
 
 const GAP = 24;
 
@@ -18,6 +18,8 @@ const NextArrow = (props) => (
 );
 
 const PopularActors = ({ actors, loading }) => {
+  const screens = Grid.useBreakpoint();
+
   if (loading)
     return (
       <section style={{ padding: "0 60px" }}>
@@ -31,7 +33,10 @@ const PopularActors = ({ actors, loading }) => {
     );
 
   return (
-    <section style={{ padding: "40px 60px 96px" }}>
+    <section
+      style={{ padding: screens.md ? "40px 60px 96px" : "32px 16px 72px" }}
+    >
+      {" "}
       <Typography.Title
         level={2}
         style={{ marginBottom: 24, textAlign: "left", paddingLeft: "20px" }}

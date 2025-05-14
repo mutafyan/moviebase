@@ -44,3 +44,12 @@
 .popular-carousel .slick-arrow:not(.nav-arrow) {
   display: none !important;
 }
+
+@media (max-width: 600px) {
+  .nav-arrow-prev {
+    right: calc(50% + 140px);
+  }
+  .nav-arrow-next {
+    left: calc(50% + 140px);
+  }
+}
