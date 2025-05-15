@@ -27,10 +27,8 @@ export async function fetchUserData(uid) {
     : { watchlist: [], favourites: { actors: [], movies: [] } };
 }
 
-export const addToWatchlist = (uid, movieId) => {
-  console.log("ADDING in api");
-  return updateDoc(usersCol(uid), { watchlist: arrayUnion(movieId) });
-};
+export const addToWatchlist = (uid, movieId) =>
+  updateDoc(usersCol(uid), { watchlist: arrayUnion(movieId) });
 
 export const removeFromWatchlist = (uid, movieId) =>
   updateDoc(usersCol(uid), { watchlist: arrayRemove(movieId) });

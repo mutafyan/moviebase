@@ -8,6 +8,8 @@ import RegisterScreen from "./pages/auth/RegisterScreen";
 import MoviesScreen from "./pages/main/MoviesScreen";
 import MovieDetailScreen from "./pages/main/MovieDetailScreen";
 import ActorScreen from "./pages/main/ActorScreen";
+import { WatchlistScreen } from "./pages/main/WatchListScreen";
+import FavouritesScreen from "./pages/main/FavouritesScreen";
 
 const ProtectedWithLayout = () => (
   <ProtectedRoute>
@@ -55,6 +57,14 @@ export const router = createBrowserRouter([
       {
         path: "/actor/:id",
         element: <ActorScreen />,
+      },
+      {
+        path: "/watchlist",
+        element: <WatchlistScreen />,
+      },
+      {
+        path: "/favourites",
+        element: <FavouritesScreen />,
       },
       //...
     ],

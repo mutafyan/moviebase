@@ -1,35 +1,50 @@
 import { useState } from "react";
-import { Button } from "antd";
+import { App, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleWatchlist } from "../../store/slices/userListsSlice";
 
-const WatchListButton = ({ size = "middle", movieId }) => {
+const WatchListButton = ({ size = "middle", movieId, ...rest }) => {
   const dispatch = useDispatch();
-
-  const inList = useSelector(
-    (state) => state.userLists?.watchlist?.includes(movieId) || false
+  const inList = useSelector((s) =>
+    Array.isArray(s.userLists?.watchlist)
+      ? s.userLists.watchlist.includes(movieId)
+      : false
   );
   const [animating, setAnimating] = useState(false);
-
-  const handleClick = () => {
+  const { message } = App.useApp();
+  const handleClick = async (e) => {
+    e.stopPropagation();
     setAnimating(true);
-    dispatch(toggleWatchlist({ movieId, inList }));
-    setTimeout(() => setAnimating(false), 200);
+    try {
+      await dispatch(toggleWatchlist({ movieId })).unwrap();
+      if (!inList) message.success("Added to watchlist!");
+      else message.warning("Removed from watchlist");
+    } catch (err) {
+      message.error(`Could not update watchlist: ${err.message}`);
+    } finally {
+      setAnimating(false);
+    }
   };
 
   return (
     <Button
       size={size}
       onClick={handleClick}
-      style={{ display: "flex", alignItems: "center" }}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "4px 6px",
+        fontSize: '12px'
+      }}
+      {...rest}
     >
       <PlusOutlined
-        // rotate 45 degrees
         style={{
           transition: "transform 200ms ease",
-          transform: inList || animating ? "rotate(45deg)" : "rotate(0deg)",
-          marginRight: 8,
+          transform: animating || inList ? "rotate(45deg)" : "rotate(0deg)",
+          marginRight: 4,
         }}
       />
       {inList ? "Remove from watchlist" : "Add to watchlist"}

@@ -5,7 +5,7 @@ import { Spin } from "antd";
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useSelector((state) => state.auth);
 
-  if (loading) return <Spin fullscreen />;
+  if (loading) return <Spin />;
   if (!user) return <Navigate to="/login" replace />;
 
   return children ?? <Outlet />;

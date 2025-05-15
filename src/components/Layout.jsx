@@ -37,7 +37,7 @@ const Layout = ({ children }) => {
               justifyContent: "center",
             }}
           >
-            <Spin fullscreen />
+            <Spin />
           </div>
         ) : (
           children

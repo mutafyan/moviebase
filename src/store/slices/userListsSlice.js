@@ -22,16 +22,11 @@ export const initUserLists = createAsyncThunk(
 export const toggleWatchlist = createAsyncThunk(
   "userLists/toggleWatchlist",
   async ({ movieId }, { getState }) => {
-    debugger;
-    console.log("toggling ", movieId, "to watchlist");
     const uid = getState().auth.user.uid;
     const inList = getState().userLists.watchlist.includes(movieId);
-    console.log("entering if else", inList);
     if (inList) {
-      console.log("Removing...");
       await removeFromWatchlist(uid, movieId);
     } else {
-      console.log("Adding...");
       await addToWatchlist(uid, movieId);
     }
     return { movieId };

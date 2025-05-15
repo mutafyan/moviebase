@@ -109,7 +109,7 @@ const NavBar = () => {
       <Affix offsetTop={0}>
         <Header
           style={{
-            zIndex: 1000,
+            zIndex: 10000,
             display: "flex",
             alignItems: "center",
             padding: screens.md ? "0 32px" : "0 16px",
@@ -201,7 +201,7 @@ const NavBar = () => {
         width={260}
         onClose={() => setDrawerOpen(false)}
         open={drawerOpen}
-        styles={{body: {padding: 0}}}
+        styles={{ body: { padding: 0 } }}
       >
         <Menu
           mode="inline"
@@ -229,6 +229,6 @@ const NavBar = () => {
       </Drawer>
     </>
   );
-}
+};
 
 export default NavBar;

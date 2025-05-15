@@ -77,7 +77,7 @@ const PopularMovies = ({ movies, loading }) => {
       >
         {movies.map((m) => (
           <div key={m.id} style={{ padding: `0 ${GAP / 2}px` }}>
-            <MovieItem movie={m} touchable={false} />
+            <MovieItem movie={m} clickable={false} />
           </div>
         ))}
       </Carousel>

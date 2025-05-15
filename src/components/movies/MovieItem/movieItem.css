@@ -1,13 +1,14 @@
 .card {
   position: relative;
   overflow: hidden;
+  min-width: 140px;
 }
 
 .card .ant-card-body {
   background: transparent;
 }
 
-.card.touchable {
+.card.clickable {
   cursor: pointer;
 }
 
@@ -38,7 +39,7 @@
   bottom: 10px;
   width: 90%;
   text-align: center;
-  transform: translate(-50%, 30%);
+  transform: translate(-50%, 55%);
   transition: transform 0.35s ease, bottom 0.35s ease;
   z-index: 1;
   color: #fff;
@@ -47,7 +48,7 @@
 
 .info.hover {
   bottom: 35%;
-  transform: translate(-50%, 50%);
+  transform: translate(-50%, 45%);
 }
 
 .title {
@@ -88,7 +89,9 @@
 }
 
 .button {
-  margin: 9px 0;
+  margin: 6px 0;
+  align-self: center;
+  justify-self: center;
   opacity: 0;
   transform: translateY(12px);
   transition: opacity 0.35s ease, transform 0.35s ease;
@@ -99,4 +102,14 @@
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+}
+
+.fav-icon {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-size: 20px;
+  color: red;
+  z-index: 0;
+  cursor: pointer;
 }

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { List, Spin, Empty, App } from "antd";
 import { searchMovies, getPopular } from "../../api/movieApi";
 import MovieItem from "../../components/movies/MovieItem";
+import MovieGrid from "../../components/movies/MovieGrid";
 
 const PAGE_SIZE = 20;
 const MAX_API_PAGES = 500; // TMDB limit
@@ -62,22 +63,9 @@ const MoviesScreen = () => {
   return (
     <>
       {query && <h2>Results for "{query}"</h2>}
-      <List
-        grid={{
-          gutter: 24,
-          xs: 1,
-          sm: 2,
-          md: 3,
-          lg: 4,
-          xl: 5,
-          xxl: 6,
-        }}
-        dataSource={data.results}
-        renderItem={(m) => (
-          <List.Item key={m.id}>
-            <MovieItem movie={m} touchable />
-          </List.Item>
-        )}
+      <MovieGrid
+        movies={data.results}
+        clickable
         pagination={{
           current: page,
           pageSize: PAGE_SIZE,

@@ -41,7 +41,7 @@ const HomeScreen = () => {
     hero === null || popularMovies === null || popularActors === null;
 
   return loading ? (
-    <Spin fullscreen />
+    <Spin />
   ) : (
     <>
       <BannerSection movie={hero} />
