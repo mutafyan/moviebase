@@ -1,7 +1,7 @@
 import { Carousel, Skeleton, Empty, Divider, Typography, Grid } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import ActorItem from "../movies/ActorItem";
-import "./PopularMovies/popularCarousels.css";
+import "./MovieCarousel/carouselStyle.css";
 
 const GAP = 24;
 const PrevArrow = ({ style, onClick }) => {

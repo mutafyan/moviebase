@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Spin, App } from "antd";
-import PopularMovies from "../../components/home/PopularMovies";
-import PopularActors from "../../components/home/PopularActors";
+import MovieCarousel from "../../components/home/MovieCarousel";
+import ActorCarousel from "../../components/home/ActorCarousel";
 import AboutSection from "../../components/home/AboutSection";
 import {
   getTrendingToday,
@@ -48,9 +48,9 @@ const HomeScreen = () => {
 
       <AboutSection />
 
-      <PopularMovies movies={popularMovies} loading={popularMovies === null} />
+      <MovieCarousel movies={popularMovies} loading={popularMovies === null} />
 
-      <PopularActors actors={popularActors} loading={popularActors === null} />
+      <ActorCarousel actors={popularActors} loading={popularActors === null} />
     </>
   );
 };

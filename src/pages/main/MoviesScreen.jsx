@@ -1,8 +1,7 @@
 import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
-import { List, Spin, Empty, App } from "antd";
+import { Spin, Empty, App } from "antd";
 import { searchMovies, getPopular } from "../../api/movieApi";
-import MovieItem from "../../components/movies/MovieItem";
 import MovieGrid from "../../components/movies/MovieGrid";
 
 const PAGE_SIZE = 20;

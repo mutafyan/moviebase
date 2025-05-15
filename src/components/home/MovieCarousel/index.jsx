@@ -1,6 +1,6 @@
 import { Carousel, Skeleton, Empty, Divider, Typography, Grid } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import "./popularCarousels.css";
+import "./carouselStyle.css";
 import MovieItem from "../../movies/MovieItem";
 
 const GAP = 24;
@@ -29,7 +29,7 @@ const NextArrow = ({ style, onClick }) => {
   );
 };
 
-const PopularMovies = ({ movies, loading }) => {
+const MovieCarousel = ({ movies, loading }) => {
   const screens = Grid.useBreakpoint();
 
   if (loading)
@@ -85,4 +85,4 @@ const PopularMovies = ({ movies, loading }) => {
   );
 };
 
-export default PopularMovies;
+export default MovieCarousel;

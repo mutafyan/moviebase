@@ -63,7 +63,7 @@ const MovieItem = ({ movie, clickable = true }) => {
           narrow ? "narrow" : ""
         }`}
         style={{ position: "relative" }}
-        bodyStyle={{ padding: 0, background: "transparent" }}
+        styles={{ body: { padding: 0, background: "transparent" } }}
         cover={<img src={poster(poster_path)} alt={title} className="cover" />}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -105,7 +105,12 @@ const MovieItem = ({ movie, clickable = true }) => {
                 View details
               </Button>
             )}
-            <WatchListButton size="small" movieId={id} type="dashed" className="button"/>
+            <WatchListButton
+              size="small"
+              movieId={id}
+              type="dashed"
+              className="button"
+            />
           </Col>
         </div>
       </Card>

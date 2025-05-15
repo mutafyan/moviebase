@@ -12,9 +12,9 @@ import {
   Carousel,
   App,
 } from "antd";
-import { getMovieDetails, poster, banner } from "../../api/movieApi";
+import { getMovieDetails, poster } from "../../../api/movieApi";
 import { useParams } from "react-router";
-
+import "./movieDetailStyle.css";
 const { Title, Paragraph, Text } = Typography;
 
 const MovieDetailScreen = () => {
@@ -117,14 +117,14 @@ const MovieDetailScreen = () => {
               autoplay
               dots
               draggable
-              style={{ maxWidth: 800, margin: "0 auto"}}
+              style={{ maxWidth: 800, margin: "0 auto" }}
             >
               {backdrops.map((b) => (
                 <Image
                   key={b.file_path}
                   src={poster(b.file_path)}
                   preview={false}
-                  style={{marginBottom: "60px"}}
+                  style={{ marginBottom: "60px" }}
                 />
               ))}
             </Carousel>
