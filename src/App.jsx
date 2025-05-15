@@ -6,6 +6,7 @@ import { auth } from "./firebase";
 import { setUser, clearUser, finishLoading } from "./store/slices/authSlice";
 import "./App.css";
 import { router } from "./Router";
+import { initUserLists } from "./store/slices/userListsSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ function App() {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
         dispatch(setUser({ email: firebaseUser.email, uid: firebaseUser.uid }));
+        dispatch(initUserLists(firebaseUser.uid));
       } else {
         dispatch(clearUser());
       }

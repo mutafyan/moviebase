@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Typography, Button, message, Grid } from "antd";
+import { Typography, Button, message, Grid, App } from "antd";
 import { PlayCircleFilled, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { banner, getMovieDetails } from "../../api/movieApi";
+import WatchListButton from "../common/WatchListButton";
 
 const { Title, Paragraph, Text } = Typography;
 const { useBreakpoint } = Grid;
@@ -11,7 +12,7 @@ const BannerSection = ({ movie }) => {
   const navigate = useNavigate();
   const screens = useBreakpoint();
   const isMobile = !screens.md;
-
+  const { message } = App.useApp();
   const [trailerKey, setTrailerKey] = useState(null);
 
   useEffect(() => {
@@ -89,13 +90,7 @@ const BannerSection = ({ movie }) => {
             More about the movie
           </Button>
 
-          <Button
-            icon={<PlusOutlined />}
-            size="large"
-            onClick={() => message.success("Added to watchlist (stub)")}
-          >
-            Add to watchlist
-          </Button>
+          <WatchListButton size="large" movieId={movie.id} />
         </div>
       </div>
 
