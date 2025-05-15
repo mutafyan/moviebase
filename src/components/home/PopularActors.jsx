@@ -4,18 +4,29 @@ import ActorItem from "../movies/ActorItem";
 import "./PopularMovies/popularCarousels.css";
 
 const GAP = 24;
+const PrevArrow = ({ style, onClick }) => {
+  return (
+    <span
+      className={`nav-arrow nav-arrow-prev`}
+      style={style}
+      onClick={onClick}
+    >
+      <LeftOutlined />
+    </span>
+  );
+};
 
-const PrevArrow = (props) => (
-  <span {...props} className="nav-arrow nav-arrow-prev">
-    <LeftOutlined />
-  </span>
-);
-
-const NextArrow = (props) => (
-  <span {...props} className="nav-arrow nav-arrow-next">
-    <RightOutlined />
-  </span>
-);
+const NextArrow = ({ style, onClick }) => {
+  return (
+    <span
+      className={`nav-arrow nav-arrow-next`}
+      style={style}
+      onClick={onClick}
+    >
+      <RightOutlined />
+    </span>
+  );
+};
 
 const PopularActors = ({ actors, loading }) => {
   const screens = Grid.useBreakpoint();

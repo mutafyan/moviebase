@@ -117,6 +117,7 @@ const BannerSection = ({ movie }) => {
             fontSize: 96,
             color: "rgba(255,255,255,.85)",
             cursor: "pointer",
+            opacity: 0.6,
           }}
         />
       )}

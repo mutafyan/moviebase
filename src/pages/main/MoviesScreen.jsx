@@ -1,56 +1,90 @@
-import { useSearchParams, useNavigate } from "react-router";
+import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
-import { List, Card, Input, Spin, Empty, App } from "antd";
-import { searchMovies, getPopular, poster } from "../../api/movieApi";
+import { List, Spin, Empty, App } from "antd";
+import { searchMovies, getPopular } from "../../api/movieApi";
 import MovieItem from "../../components/movies/MovieItem";
 
+const PAGE_SIZE = 20;
+const MAX_API_PAGES = 500; // TMDB limit
+
 const MoviesScreen = () => {
-  const [params] = useSearchParams();
-  const query = params.get("query")?.trim() || null;
-  const [page, setPage] = useState(1);
-  const [movies, setMovies] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("query")?.trim() || null;
+
+  const urlPage = Math.min(
+    Math.max(Number(searchParams.get("page") || 1), 1),
+    MAX_API_PAGES
+  );
+  const [page, setPage] = useState(urlPage);
+  useEffect(() => setPage(urlPage), [urlPage]);
+
+  const [data, setData] = useState(null);
   const { message } = App.useApp();
-  const navigate = useNavigate();
+
   useEffect(() => {
     let cancelled = false;
-    const load = async () => {
-      setMovies(null);
+
+    (async () => {
+      setData(null);
       try {
-        const data = query
-          ? await searchMovies(query, page)
-          : await getPopular(page);
-        if (!cancelled) setMovies(data.results);
+        const res = query
+          ? await searchMovies(query, urlPage)
+          : await getPopular(urlPage);
+
+        if (!cancelled) setData(res);
       } catch (err) {
         if (!cancelled) {
           message.error(err.message);
-          setMovies([]);
+          setData({ results: [], total_results: 0, total_pages: 0 });
         }
       }
-    };
-    load();
+    })();
+
     return () => (cancelled = true);
-  }, [query, page, message]);
+  }, [query, urlPage, message]);
 
-  if (movies === null) return <Spin fullscreen />;
+  const handlePageChange = (next) => {
+    const safe = Math.min(next, MAX_API_PAGES);
+    setPage(safe);
 
-  if (!movies.length) return <Empty description="Nothing found." />;
+    const p = new URLSearchParams(searchParams);
+    if (safe === 1) p.delete("page");
+    else p.set("page", safe);
+    setSearchParams(p, { replace: true });
+  };
+
+  if (data === null) return <Spin />;
+  if (!data.results.length) return <Empty description="Nothing found." />;
+
+  const effectivePages = Math.min(data.total_pages, MAX_API_PAGES);
+  const totalItems = effectivePages * PAGE_SIZE;
 
   return (
     <>
       {query && <h2>Results for "{query}"</h2>}
       <List
-        grid={{ gutter: 24, column: 5 }}
-        dataSource={movies}
+        grid={{
+          gutter: 24,
+          xs: 1,
+          sm: 2,
+          md: 3,
+          lg: 4,
+          xl: 5,
+          xxl: 6,
+        }}
+        dataSource={data.results}
         renderItem={(m) => (
           <List.Item key={m.id}>
-            <MovieItem movie={m} touchable={true}/>
+            <MovieItem movie={m} touchable />
           </List.Item>
         )}
         pagination={{
           current: page,
-          onChange: setPage,
-          total: 500 * 20, // TMDB gives 500 pages
+          pageSize: PAGE_SIZE,
+          total: totalItems,
+          onChange: handlePageChange,
           showSizeChanger: false,
+          style: { display: "flex", justifyContent: "center", padding: 10 },
         }}
       />
     </>

@@ -7,11 +7,11 @@ import { useEffect } from "react";
 const { Content, Footer } = AntLayout;
 
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
 
   useEffect(() => {
-    window.scroll({top: 0, behavior: 'smooth'});
-  }, [pathname]);
+    window.scroll({ top: 0, behavior: "smooth" });
+  }, [pathname, search]);
 
   return null;
 };

@@ -5,10 +5,10 @@ import MovieItem from "../../movies/MovieItem";
 
 const GAP = 24;
 
-const PrevArrow = ({ className, style, onClick }) => {
+const PrevArrow = ({ style, onClick }) => {
   return (
     <span
-      className={`nav-arrow nav-arrow-prev ${className}`}
+      className={`nav-arrow nav-arrow-prev`}
       style={style}
       onClick={onClick}
     >
@@ -17,10 +17,10 @@ const PrevArrow = ({ className, style, onClick }) => {
   );
 };
 
-const NextArrow = ({ className, style, onClick }) => {
+const NextArrow = ({ style, onClick }) => {
   return (
     <span
-      className={`nav-arrow nav-arrow-next ${className}`}
+      className={`nav-arrow nav-arrow-next`}
       style={style}
       onClick={onClick}
     >
