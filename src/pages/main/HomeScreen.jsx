@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Spin, App } from "antd";
+import { Spin, App, Typography, Divider } from "antd";
 import MovieCarousel from "../../components/home/MovieCarousel";
 import ActorCarousel from "../../components/home/ActorCarousel";
 import AboutSection from "../../components/home/AboutSection";

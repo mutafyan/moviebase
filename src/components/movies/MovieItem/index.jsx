@@ -108,7 +108,6 @@ const MovieItem = ({ movie, clickable = true }) => {
             <WatchListButton
               size="small"
               movieId={id}
-              type="dashed"
               className="button"
             />
           </Col>

@@ -35,9 +35,9 @@ const WatchListButton = ({ size = "middle", movieId, ...rest }) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "4px 6px",
-        fontSize: '12px'
+        padding: "6px 6px",
       }}
+      type="default"
       {...rest}
     >
       <PlusOutlined
