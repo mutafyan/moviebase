@@ -49,6 +49,13 @@ const HomeScreen = () => {
       <AboutSection />
 
       <MovieCarousel movies={popularMovies} loading={popularMovies === null} />
+      <Typography.Title
+        level={2}
+        style={{ marginBottom: 24, textAlign: "left", paddingLeft: "20px" }}
+      >
+        Popular actors of 2025
+      </Typography.Title>
+      <Divider variant="solid" />
 
       <ActorCarousel actors={popularActors} loading={popularActors === null} />
     </>

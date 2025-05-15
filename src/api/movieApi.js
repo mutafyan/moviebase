@@ -31,7 +31,7 @@ export const searchMovies = (query, page = 1) =>
   );
 
 export const getMovieDetails = (id) =>
-  fetchJson(`${TMDB}/movie/${id}?append_to_response=videos,credits,images`);
+  fetchJson(`${TMDB}/movie/${id}?append_to_response=videos,credits,images,reviews`);
 
 export const getPopular = (page = 1) =>
   fetchJson(`${TMDB}/movie/popular?page=${page}`);

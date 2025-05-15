@@ -28,7 +28,7 @@ const NextArrow = ({ style, onClick }) => {
   );
 };
 
-const PopularActors = ({ actors, loading }) => {
+const ActorCarousel = ({ actors, loading }) => {
   const screens = Grid.useBreakpoint();
 
   if (loading)
@@ -47,14 +47,6 @@ const PopularActors = ({ actors, loading }) => {
     <section
       style={{ padding: screens.md ? "40px 60px 96px" : "32px 16px 72px" }}
     >
-      {" "}
-      <Typography.Title
-        level={2}
-        style={{ marginBottom: 24, textAlign: "left", paddingLeft: "20px" }}
-      >
-        Popular actors of 2025
-      </Typography.Title>
-      <Divider variant="solid" />
       <Carousel
         className="popular-carousel"
         autoplay
@@ -86,4 +78,4 @@ const PopularActors = ({ actors, loading }) => {
   );
 };
 
-export default PopularActors;
+export default ActorCarousel;
