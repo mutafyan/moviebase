@@ -8,7 +8,7 @@ import {
   getPopularByYear,
   getPopularActors,
 } from "../../api/movieApi";
-import BannerSection from "../../components/Home/BannerSection";
+import BannerSection from "../../components/home/BannerSection";
 
 const HomeScreen = () => {
   const [hero, setHero] = useState(null);
