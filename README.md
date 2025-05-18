@@ -109,6 +109,7 @@ Responsive, mobile-ready, and built on [The Movie Database (TMDB)](https://www.t
   ![Actor page](assets/screenshots/actor-detail.png)
   ![Actor page features](assets/screenshots/actor-detail-features.png)
   ![Search results](assets/screenshots/search.png)
+  ![Firestore storage](assets/screenshots/user-storage.png)
 
 </details>
 
