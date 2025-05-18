@@ -26,10 +26,10 @@ const AboutSection = () => {
         <Divider />
         <Paragraph style={{ fontSize: 16, maxWidth: 760, textAlign: "left" }}>
           MovieBase is a lightweight catalogue built on
-          <strong>The Movie Database</strong>. Our goal is to give you the
+          <strong> The Movie Database</strong>. Our goal is to give you the
           essentials—trailers, ratings, cast and crew—without the ads or clutter
           you find on larger portals. Think of it as the fastest way to decide
-          <em>what to watch tonight</em>.
+          <em> what to watch tonight</em>.
         </Paragraph>
       </Card>
     </section>
